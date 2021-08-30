@@ -11,7 +11,7 @@ namespace AlfredCmd
         static void Main(string[] args)
         {
 
-            Console.WriteLine("Ola Mundo!");
+            Console.WriteLine("Olá Mundo!");
             Console.ReadKey();
         }
     }
