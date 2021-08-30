@@ -1,4 +1,4 @@
 # Alfred
 Consiste em uma solução com varios projetos de Exemplos, com o intuito de auxilir o programador em diversos momentos no seu projeto.
 Linguagem basica C#.
-terão varios exemplos como VbA, Cli, Azure functions, api, webService, selenium.
+terão varios exemplos como VbA, Cli, Azure functions, api, webService, selenium, App Web
