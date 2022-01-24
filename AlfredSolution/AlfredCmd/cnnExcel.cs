@@ -89,6 +89,8 @@ namespace AlfredCmd
             string der;
             //Create COM Objects. Create a COM object for everything that is referenced
             Excel.Application xlApp = new Excel.Application();
+            xlApp.Visible = true;
+               
             Excel.Workbook xlWorkbook = xlApp.Workbooks.Open(fullpath);
             Excel._Worksheet xlWorksheet = xlWorkbook.Sheets[1];
             Excel.Range xlRange = xlWorksheet.UsedRange;
