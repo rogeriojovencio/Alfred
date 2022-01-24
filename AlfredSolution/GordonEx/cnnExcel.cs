@@ -24,7 +24,8 @@ namespace AlfredCmd
 
             xlApp.WindowState = Excel.XlWindowState.xlMaximized;
 
-            if (sVisible == 1) {
+            if (sVisible == 1)
+            {
                 xlApp.Visible = true;
             }
             else
@@ -41,7 +42,8 @@ namespace AlfredCmd
         {
             try
             {
-                if (sSaved == 1) {
+                if (sSaved == 1)
+                {
                     wb.Close(1);
                     return 1;
                 }
@@ -65,10 +67,9 @@ namespace AlfredCmd
 
         #region fcnLastLine
         public static int fcnLastLine(Excel.Worksheet ws)
-        {            
+        {
             Excel.Range xlRange = ws.UsedRange;
             int rowCount = xlRange.Rows.Count;
-            int colCount = xlRange.Columns.Count;
             return rowCount;
         }
         #endregion fcnLastLine
@@ -76,11 +77,82 @@ namespace AlfredCmd
         #region fcnLastColumn
         public static int fcnLastColumn(Excel.Worksheet ws)
         {
-            Excel.Range xlRange = ws.UsedRange;            
-            int colCount = xlRange.Columns.Count;
-            return colCount;
+            try
+            {
+                Excel.Range xlRange = ws.UsedRange;
+                int colCount = xlRange.Columns.Count;
+                return colCount;
+
+            }
+            catch (Exception ex)
+            {
+
+                Console.WriteLine($"Erro: {ex}");
+                return 0;
+            }
+            
         }
         #endregion fcnLastColumn
+
+        #region fcnGoLastLine
+        public static int fcnGoLastLine(Excel.Worksheet ws, int intCol)
+        {
+            try
+            {
+                Excel.Range xlRange = ws.UsedRange;
+                int rowCount = xlRange.Rows.Count;
+                return ws.Cells[rowCount, intCol];
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Erro: {ex}");
+                return 0;
+            }
+            
+        }
+        #endregion fcnGoLastLine
+
+        #region fcnGoLastColumn
+        public static int fcnGoLastColumn(Excel.Worksheet ws, int intRow)
+        {
+            try
+            {
+                Excel.Range xlRange = ws.UsedRange;
+                int colCount = xlRange.Columns.Count;
+                return ws.Cells[colCount, intRow];
+            }
+            catch (Exception ex)
+            {
+
+                Console.WriteLine($"Erro: {ex}");
+                return 0;
+            }
+            
+        }
+        #endregion fcnGoLastColumn
+
+        #region fcnControlCellColor
+        public static int fcnControlCellColor(Excel.Worksheet ws, int intRow, int intLastColumn, int intflag, int intColorIndex)
+        {
+            // metodo tem por objetivo colorir a dimenção da linha e coluna celecionada com a cor desejada evidenciando a linha em questão.
+
+            try
+            {
+                if (intflag == 1)
+                {
+                    ws.Cells[intRow, intLastColumn].Interior.ColorIndex = intColorIndex;
+                }
+                return 1;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Erro: {ex}");
+                return 0;
+            }
+            
+           
+        }
+        #endregion fcnControlCellColor
 
 
 
@@ -90,14 +162,3 @@ namespace AlfredCmd
     // continua...
 
 }
-
-
-
-
-
-
-
-
-
-   
- 
