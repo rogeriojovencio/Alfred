@@ -18,22 +18,31 @@ namespace AlfredCmd
         #region OpenWorkbook
         public static object fcnOpenAppExcel(string spathFile, int sVisible)
         {
-            string sfilePath = spathFile;
-            Excel.Application xlApp = new Excel.Application();
-            Excel.Workbook wb = xlApp.Workbooks.Open(@sfilePath);
-
-            xlApp.WindowState = Excel.XlWindowState.xlMaximized;
-
-            if (sVisible == 1)
+            try
             {
-                xlApp.Visible = true;
+                string sfilePath = spathFile;
+                Excel.Application xlApp = new Excel.Application();
+                Excel.Workbook wb = xlApp.Workbooks.Open(@sfilePath);
+
+                xlApp.WindowState = Excel.XlWindowState.xlMaximized;
+
+                if (sVisible == 1)
+                {
+                    xlApp.Visible = true;
+                }
+                else
+                {
+                    xlApp.Visible = false;
+                }
+                Console.WriteLine("Executando Abertura do Exel...");
+                return wb;
             }
-            else
+            catch (Exception)
             {
-                xlApp.Visible = false;
+                return 0;
+                Console.WriteLine("Não foi possível fechar o Arquivo do Exel...");
             }
-            Console.WriteLine("Executando Abertura do Exel...");
-            return wb;
+            
         }
         #endregion OpenWorkbook
 
@@ -53,10 +62,10 @@ namespace AlfredCmd
                     return 1;
                 }
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
                 return 0;
-                Console.WriteLine("Não foi possível fechar o Arquivo do Exel...");
+                Console.WriteLine($"Não foi possível fechar o Arquivo do Exel...{ex}");
             }
 
 
@@ -153,8 +162,6 @@ namespace AlfredCmd
            
         }
         #endregion fcnControlCellColor
-
-
 
 
     }
