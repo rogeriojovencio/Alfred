@@ -6,38 +6,44 @@ using Excel = Microsoft.Office.Interop.Excel;
 
 namespace AlfredCmd
 {
-    class cnnExcel
+    public static class cnnExcel
     {
 
         #region Members
-        public object XlApp;
-        public object Wb;
-        public object ws;
+        public static object XlApp;
+        public static object Wb;
+        public static object ws;
         #endregion Members
 
         #region OpenWorkbook
-        public object fcnOpenAppExcel(string spath, string sfile)
+        public static object fcnOpenAppExcel(string spathFile, int sVisible)
         {
-            string sfilePath = spath + sfile;
-            Excel.Application xlApp = new Excel.Application();           
-            Excel.Workbook wb = xlApp.Workbooks.Open(sfilePath);
-            
+            string sfilePath = spathFile;
+            Excel.Application xlApp = new Excel.Application();
+            Excel.Workbook wb = xlApp.Workbooks.Open(@sfilePath);
+
             xlApp.WindowState = Excel.XlWindowState.xlMaximized;
-            xlApp.DisplayAlerts = false;
-            xlApp.Visible = true;
+
+            if (sVisible == 1) {
+                xlApp.Visible = true;
+            }
+            else
+            {
+                xlApp.Visible = false;
+            }
             Console.WriteLine("Executando Abertura do Exel...");
-            return wb; 
+            return wb;
         }
         #endregion OpenWorkbook
 
         #region CloseWorkbook
-        public object fcnCloseAppExcel( Excel.Workbook wb, int sSaved)
+        public static object fcnCloseAppExcel(Excel.Workbook wb, int sSaved)
         {
             try
             {
-                if (sSaved == 1) { 
-                wb.Close(1);
-                return 1;
+                if (sSaved == 1) {
+                    wb.Close(1);
+                    return 1;
                 }
                 else
                 {
@@ -52,21 +58,41 @@ namespace AlfredCmd
             }
 
 
-            
+
         }
 
         #endregion CloseWorkbook
 
+        #region fcnLastLine
+        public static int fcnLastLine(Excel.Worksheet ws)
+        {            
+            Excel.Range xlRange = ws.UsedRange;
+            int rowCount = xlRange.Rows.Count;
+            int colCount = xlRange.Columns.Count;
+            return rowCount;
+        }
+        #endregion fcnLastLine
 
-
-        // continua...
-
+        #region fcnLastColumn
+        public static int fcnLastColumn(Excel.Worksheet ws)
+        {
+            Excel.Range xlRange = ws.UsedRange;            
+            int colCount = xlRange.Columns.Count;
+            return colCount;
+        }
+        #endregion fcnLastColumn
 
 
 
 
     }
+
+    // continua...
+
 }
+
+
+
 
 
 
