@@ -13,6 +13,7 @@ namespace AlfredCmd
         public static object XlApp;
         public static object Wb;
         public static object ws;
+        
         #endregion Members
 
         #region OpenWorkbook
@@ -164,8 +165,42 @@ namespace AlfredCmd
         #endregion fcnControlCellColor
 
 
+        public static int SeekLineClient(Excel.Worksheet ws, string seekString, string sRange )
+        {
+
+            seekString = seekString.Trim();
+            if (!string.IsNullOrEmpty(seekString))
+            {
+               
+
+            }
+
+            return 1;
+
+            // continua...
+        }
+
+
+
+        public static string formatData(string sdata, int stype) 
+        {
+            string sday;
+            string smonth;
+            string sYear;
+            string sDateOut;
+            string sHour;
+            string spHour;
+            string sminute;
+            string sSecond;
+            string sTimeOut;
+
+
+            return "data";
+            // continua...
+        }
+
     }
 
-    // continua...
+    
 
 }
