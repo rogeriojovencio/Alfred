@@ -12,6 +12,17 @@ namespace AlfredCmd
         static void Main(string[] args)
         {
 
+            // Criar Projetos: Class Library
+                // Tratamento Excel.....continua...
+                // Tratamento com Autoit.
+                // projeto Web Spinea MVC.
+
+            
+            
+
+
+
+
             Console.WriteLine("Olá Mundo!");
             string strsourceFile = "C:\\dados\\Book1.xlsx";
 
