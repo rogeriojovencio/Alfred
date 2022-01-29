@@ -9,7 +9,7 @@ namespace AlfredCmd
 {
     class Program
     {
-        static void Main(string[] args)
+        static void Main()
         {
 
             // Criar Projetos: Class Library
@@ -28,10 +28,7 @@ namespace AlfredCmd
 
             Excel.Workbook wb1 = (Excel.Workbook)cnnExcel.fcnOpenAppExcel(strsourceFile,1);
             Excel.Worksheet ws1 = wb1.Sheets[1];
-
-            Excel.Range xlRange = ws1.UsedRange;
-            int rowCount = xlRange.Rows.Count;
-            int colCount = xlRange.Columns.Count;
+            Console.WriteLine(ws1.Cells[1, 1]);           
 
             cnnExcel.fcnCloseAppExcel(wb1, 0);
 
