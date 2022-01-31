@@ -28,7 +28,7 @@ namespace AlfredCmd
 
             Excel.Workbook wb1 = (Excel.Workbook)cnnExcel.fcnOpenAppExcel(strsourceFile,1);
             Excel.Worksheet ws1 = wb1.Sheets[1];
-            Console.WriteLine(ws1.Cells[1, 1]);           
+            Console.WriteLine($"Este é o valor da Celula 1 {ws1.Cells[1, 1]}");           
 
             cnnExcel.fcnCloseAppExcel(wb1, 0);
 

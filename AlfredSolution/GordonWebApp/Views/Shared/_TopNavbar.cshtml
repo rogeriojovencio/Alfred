@@ -1,0 +1,48 @@
+﻿@*###################Seleção de dominio, não concluido para multitenant##################*@
+@*@using Microsoft.AspNetCore.Http
+    @inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+    @if (@HttpContextAccessor.HttpContext.Session.GetString("SessionDominio") != null)
+    {
+
+        <div class="row border-bottom">
+            <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
+                <div class="navbar-header">
+                    <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i> </a>
+                </div>
+                <ul class="nav navbar-top-links navbar-right">
+                    <li>
+                        <a href="@Url.Action("SelectDomain", "Home")">
+                            <i class="fa fa-plug"></i> @HttpContextAccessor.HttpContext.Session.GetString("SessionDominio")
+                        </a>
+                    </li>
+                    <li>
+                        <a href="@Url.Action("SignOut", "Account")">
+                            <i class="fa fa-sign-out"></i> Log out
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    }
+    else
+    {
+        Context.Response.Redirect("/Home/SelectDomain");
+    }*@
+
+
+
+
+<div class="row border-bottom">
+    <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
+        <div class="navbar-header">
+            <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i> </a>
+        </div>
+        <ul class="nav navbar-top-links navbar-right">
+            <li>
+                <a href="@Url.Action("SignOut", "Account")">
+                    <i class="fa fa-sign-out"></i> Log out
+                </a>
+            </li>
+        </ul>
+    </nav>
+</div>

@@ -1,48 +1,90 @@
-﻿<!DOCTYPE html>
-<html lang="en">
+﻿@using GordonWebApp.HtmlHelpers
+<!DOCTYPE html>
+<html>
 <head>
+
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - GordonWebApp</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" />
+    <title>@ViewData["Title"] - @Html.PageClass()</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <!-- Add local styles, mostly for plugins css file -->
+    @if (IsSectionDefined("Styles"))
+    {
+        @RenderSection("Styles", required: false)
+    }
+    <environment>
+        <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+        @*<link href="~/lib/inspinia/css/style.css" rel="stylesheet" />*@
+        <link href="~/lib/font-awesome/css/font-awesome.css" rel="stylesheet" />
+        <link href="~/css/animate.css" rel="stylesheet" />
+        <link href="~/lib/jasny-bootstrap/dist/css/jasny-bootstrap.css" rel="stylesheet" />
+        <link href="~/lib/ladda/dist/ladda-themeless.min.css" rel="stylesheet" />
+        <link href="~/lib/sweetalert/dist/sweetalert.css" rel="stylesheet" />
+        <link href="~/lib/bootstrap-datepicker/dist/css/bootstrap-datepicker.css" rel="stylesheet" />       
+        <link href="~/lib/dataTables/datatables.min.css" rel="stylesheet" />
+        <link href="~/lib/iCheck/custom.css" rel="stylesheet" />
+        <link rel="stylesheet" href="~/css/style.css" asp-append-version="true" />
+    </environment>
+
+
+
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">GordonWebApp</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-    </header>
-    <div class="container">
-        <main role="main" class="pb-3">
+
+    <!-- Skin configuration box -->
+    <!-- <partial name="_SkinConfig" /> -->
+    <!-- Wrapper-->
+    <div id="wrapper" class="@Html.PageClass()">
+
+        <!-- Navigation -->
+        <partial name="_Navigation" />
+
+        <!-- Page wraper -->
+        <div id="page-wrapper" class="gray-bg @ViewBag.SpecialClass">
+
+            <!-- Top Navbar -->
+            <partial name="_TopNavbar" />
+
+            <!-- Main view  -->
             @RenderBody()
-        </main>
+
+            <!-- Footer -->
+            <partial name="_Footer" />
+
+        </div>
+        <!-- End page wrapper-->
+        <!-- Right Sidebar -->
+        <partial name="_RightSidebar" />
+
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2022 - GordonWebApp - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
-    </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    @await RenderSectionAsync("Scripts", required: false)
+
+    <environment>
+
+        <script src="~/lib/jquery/dist/jquery.js"></script>
+        <script src="~/lib/Popper/popper.min.js"></script>
+        <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+        <script src="~/lib/metisMenu/dist/jquery.metisMenu.js"></script>
+        <script src="~/lib/slimScroll/jquery.slimscroll.js"></script>
+        <script src="~/lib/pace/pace.js"></script>
+        <script src="~/lib/jasny-bootstrap/dist/js/jasny-bootstrap.js"></script>
+        <script src="~/lib/inspinia/js/inspinia.js"></script>
+        <script src="~/lib/ladda/dist/spin.min.js"></script>
+        <script src="~/lib/ladda/dist/ladda.min.js"></script>
+        <script src="~/lib/ladda/dist/ladda.jquery.min.js"></script>
+        <script src="~/lib/sweetalert/dist/sweetalert.min.js"></script>
+        <script src="~/lib/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+        <script src="~/lib/bootstrap-datepicker/dist/locales/bootstrap-datepicker.pt-BR.min.js"></script>
+        <script src="~/lib/dataTables/datatables.min.js"></script>
+        <script src="~/js/configuration.js"></script>
+        <script src="~/lib/iCheck/icheck.min.js"></script>
+        <script src="~/js/skin.config.js"></script>
+        <script src="~/js/script.js" asp-append-version="true"></script>
+
+
+    </environment>
+
+    @RenderSection("scripts", required: false)
 </body>
 </html>

@@ -1,0 +1,30 @@
+﻿<nav class="navbar-default navbar-static-side" role="navigation">
+    <div class="sidebar-collapse">
+        <a class="close-canvas-menu"><i class="fa fa-times"></i></a>
+        <ul class="nav metismenu" id="side-menu">
+            <li class="nav-header">
+                <div class="dropdown profile-element">
+                    <span>
+                        <img alt="image" class="rounded-circle" src="~/Images/profile_small.jpg" />
+                    </span>
+                    <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                        <span class="clear">
+                            <span class="block m-t-xs">
+                                <strong class="font-bold">David Williams</strong>
+                            </span> <span class="text-muted text-xs block">Art Director <b class="caret"></b></span>
+                        </span>
+                    </a>
+                    <ul class="dropdown-menu animated fadeInRight m-t-xs">
+                        <li><a class="dropdown-item" href="@Url.Action("Profile", "AppViews")">Profile</a></li>
+                        <li><a class="dropdown-item" href="@Url.Action("Contacts", "AppViews")">Contacts</a></li>
+                        <li><a class="dropdown-item" href="@Url.Action("Inbox", "Mailbox")">Mailbox</a></li>
+                        <li class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="@Url.Action("Login", "Pages")">Logout</a></li>
+                    </ul>
+                </div>
+                <div class="logo-element">
+                </div>
+            </li>
+        </ul>
+    </div>
+</nav>
