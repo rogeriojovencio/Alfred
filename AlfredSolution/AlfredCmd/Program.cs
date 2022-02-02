@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Office.Interop.Excel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -48,21 +49,64 @@ namespace AlfredCmd
 
             Console.WriteLine("Olá Mundo!");
             string strsourceFile = "C:\\dados\\Book1.xlsx";
+           // string strsourceFile2 = "C:\\dados\\Entradas.xlsx";
+
+            
             Excel.Workbook wb1 = (Excel.Workbook)CnnExcel.FcnOpenAppExcel(strsourceFile, 1);
-            Excel.Worksheet ws1 = wb1.Sheets[1];
-            Console.WriteLine($"Este é o valor da Celula 1 {ws1.Cells[1, 1]}");
+            //Excel.Workbook wb2 = (Excel.Workbook)CnnExcel.FcnOpenAppExcel(strsourceFile2, 1);
 
 
-            string[] sSheet;
-            sSheet = new string[100];
-            sSheet[0] = "José";
-            sSheet[1] = "Carlos";
-            sSheet[2] = "Macoratti";
+            //forme de percorrer uma planilha no Excel
+            foreach(Excel.Worksheet ws in wb1.Worksheets)
+            {
+                if (ws.Name == "José")
+                {
+                    Console.WriteLine($"Este é o valor da Celula 1 {ws.Cells[1, 1]}");
+                }
+            }
 
-          //  cnnExcel.suProtectArrayShhets(sSheet);
+
+            //xlWorkSheet = (Excel.Worksheet)xlWorkBook.Worksheets.get_Item(1);
+            //xlWorkSheet.Cells[1, 1] = "http://www.macoratti.net";
 
 
-            CnnExcel.FcnCloseAppExcel(wb1, 0);
+            Excel.Worksheet ws1 = (Excel.Worksheet)wb1.Worksheets.get_Item(1);
+
+            /* forma de passar parametros para celula evidenciada            
+                ws1.Cells[1, 1] = "33333"; 
+                Range range = ws1.get_Range("A1"); 
+                Console.WriteLine(range.Value);
+            */
+
+
+            /*  forma para criar e preencher u array de strings e popula-lo com sas planilhas
+                string[] sSheet;
+                sSheet = new string[100];
+                sSheet[0] = "Menu";
+                sSheet[1] = "Auxiliar";
+                sSheet[2] = "Config";
+
+            */
+
+
+            // CnnExcel.SuProtecSelectSheets(0, wb1, sSheet);
+
+            CnnExcel.FcnCloseAppExcel(wb1, 1);
+
+
+            System.Diagnostics.Process[] process = System.Diagnostics.Process.GetProcessesByName("Excel");
+            foreach (System.Diagnostics.Process p in process)
+            {
+                if (!string.IsNullOrEmpty(p.ProcessName))
+                {
+                    try
+                    {
+                        p.Kill();
+                    }
+                    catch { }
+                }
+            }
+
 
 
 

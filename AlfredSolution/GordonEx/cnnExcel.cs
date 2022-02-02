@@ -13,10 +13,9 @@ namespace AlfredCmd
         public static object XlApp;
         public static object Wb;
         public static object ws;
+        const string pwd = "!@#";
 
-
-
-
+        
         #endregion Members
 
         #region OpenWorkbook
@@ -26,16 +25,21 @@ namespace AlfredCmd
             {
                 string sfilePath = spathFile;
                 Excel.Application xlApp = new Excel.Application();
-                Excel.Workbook wb = xlApp.Workbooks.Open(@sfilePath);
+                
 
+                Excel.Workbook wb = xlApp.Workbooks.Open(@sfilePath);                
                 xlApp.WindowState = Excel.XlWindowState.xlMaximized;
 
                 if (sVisible == 1)
                 {
+                    xlApp.ScreenUpdating = true;
+                    xlApp.DisplayAlerts = true;
                     xlApp.Visible = true;
                 }
                 else
                 {
+                    xlApp.ScreenUpdating = false;
+                    xlApp.DisplayAlerts = false;
                     xlApp.Visible = false;
                 }
                 Console.WriteLine("Executando Abertura do Exel...");
@@ -44,20 +48,19 @@ namespace AlfredCmd
             catch (Exception)
             {
                 Console.WriteLine("Não foi possível fechar o Arquivo do Exel...");
-                return 0;
-                
+                return 0;                
             }
 
         }
         #endregion OpenWorkbook
 
         #region CloseWorkbook
-        public static object FcnCloseAppExcel(Excel.Workbook wb, int sSaved)
+        public static object FcnCloseWbExcel(Excel.Workbook wb, int sSaved)
         {
             try
             {
                 if (sSaved == 1)
-                {
+                {                    
                     wb.Close(1);
                     return 1;
                 }
@@ -73,12 +76,28 @@ namespace AlfredCmd
                 return 0;
                
             }
-
-
-
         }
 
         #endregion CloseWorkbook
+
+        #region CloseExcelAplication
+        public static void FcnCloseAppExcel()
+        {
+            //Este metodo tem por objetivo fechar todos os excel Aberto,  Retoirando do Gerenciado de memoria.
+            System.Diagnostics.Process[] process = System.Diagnostics.Process.GetProcessesByName("Excel");
+            foreach (System.Diagnostics.Process p in process)
+            {
+                if (!string.IsNullOrEmpty(p.ProcessName))
+                {
+                    try
+                    {
+                        p.Kill();
+                    }
+                    catch { }
+                }
+            }
+        }
+        #endregion CloseExcelAplication
 
         #region FcnLastLine
         public static int FcnLastLine(Excel.Worksheet ws)
@@ -130,6 +149,8 @@ namespace AlfredCmd
         #region FcnGoLastColumn
         public static int FcnGoLastColumn(Excel.Worksheet ws, int intRow)
         {
+            /* O metodo tem por objetivo ir para coluna linha da planilha*/
+            
             try
             {
                 Excel.Range xlRange = ws.UsedRange;
@@ -149,7 +170,8 @@ namespace AlfredCmd
         #region fcnControlCellColor
         public static int FcnControlCellColor(Excel.Worksheet ws, int intRow, int intLastColumn, int intflag, int intColorIndex)
         {
-            // metodo tem por objetivo colorir a dimenção da linha e coluna celecionada com a cor desejada evidenciando a linha em questão.
+            /* metodo tem por objetivo colorir a dimenção da 
+             * linha e coluna celecionada com a cor desejada evidenciando a linha em questão.*/
 
             try
             {
@@ -169,46 +191,10 @@ namespace AlfredCmd
         }
         #endregion fcnControlCellColor
 
-
-        public static int SeekLineClient(Excel.Worksheet ws, string seekString, string sRange)
+        #region SuProtecSelectSheets
+        public static string[] SuProtecSelectSheets(int stype, Excel.Workbook wb1, string[] she1)
         {
-
-            seekString = seekString.Trim();
-            if (!string.IsNullOrEmpty(seekString))
-            {
-
-
-            }
-
-            return 1;
-
-            // continua...
-        }
-
-
-
-        //public static string FormatData(string sdata, int stype)
-        //{
-        //    //string sday;
-        //    //string smonth;
-        //    //string sYear;
-        //    //string sDateOut;
-        //    //string sHour;
-        //    //string spHour;
-        //    //string sminute;
-        //    //string sSecond;
-        //    //string sTimeOut;
-
-
-        //    return "data";
-        //    // continua...
-        //}
-
-
-        public static string[] SuProtecSelectSheets(int stype, Excel.Application xlApp1, Excel.Workbook wb1, string[] she1)
-        {
-            xlApp1.ScreenUpdating = false;
-            xlApp1.DisplayAlerts = false;
+            
 
 
             string[] sSheet;
@@ -225,12 +211,13 @@ namespace AlfredCmd
                 {
                     Console.WriteLine($"O nome das Planilhas é: {she}");
                     //pesquisa se existem no workbook atual
-                    foreach (Excel.Worksheets ws in wb1.Worksheets)
-                    {
-                        if(ws.ToString() == she)
+                    foreach (Excel.Worksheet ws in wb1.Worksheets)
+                    {   
+                        if (ws.Name == she)
                         {
                             // existe entao aplica o metodo protect
                             // soma no array de saida, par retornar os atualizados
+                            Protect_Unprotec_sheet(ws, true);
                             myArray[countsht] = she.ToString();
                             countsht++;
                             if (countsht > 20)
@@ -239,7 +226,12 @@ namespace AlfredCmd
                                 return myArray;
                             }
                         }
-                    }                    
+                        else
+                        {
+                            //Caso não encontrar na lista não protege.
+                            Protect_Unprotec_sheet(ws, false);
+                        }
+                    }
                 }
                 else
                 {
@@ -251,36 +243,91 @@ namespace AlfredCmd
 
         }
 
+        #endregion SuProtecSelectSheets
 
-
-
-      
-          
-
-
-        public  static void Protect_Unprotec_sheet(Excel.Worksheet ws,  bool stype)
+        #region Protect_Unprotec_sheet
+        public static void Protect_Unprotec_sheet(Excel.Worksheet ws,  bool stype)
         {
             if (!stype)
             {
                 if (ws.ProtectContents)
                 {
-                    ws.Unprotect(Password: "!@#");
+                    ws.Unprotect(Password: pwd);
                 }
             }
             else
             {
                 if (!ws.ProtectContents)
                 {
-                    ws.Protect(Password: "!@#", DrawingObjects:true,Contents:true, Scenarios:true , AllowSorting:true, AllowFiltering:true, AllowUsingPivotTables:true);
+                    ws.Protect(Password: pwd, DrawingObjects:true,Contents:true, Scenarios:true , AllowSorting:true, AllowFiltering:true, AllowUsingPivotTables:true);
                 }
 
             }
         }
+        #endregion Protect_Unprotec_sheet
 
 
-        
+
+        public static string FormatData(string sdata, int stype)
+        {
+            string sday;
+            string smonth;
+            string sYear;
+            string sDateOut;
+            string sHour;
+            string spHour;
+            string sminute;
+            string sSecond;
+            string sTimeOut;
 
 
+            DateTime dataValida;
+
+            if (DateTime.TryParse(sdata, out dataValida))
+
+            {
+
+                dataValida.ToString("MM/dd/yyyy");
+                sday = dataValida.ToString("dd");
+                smonth = dataValida.ToString("MM");
+                sYear = dataValida.ToString("yyyy");                
+                sHour = dataValida.ToString("MM");                 
+                sminute = dataValida.ToString("mm"); 
+                sSecond = dataValida.ToString("ss"); 
+                
+
+            }
+
+            else
+
+            {
+
+                //Se a data for invalida
+
+            }
+
+
+
+
+
+
+
+
+
+            return "data";
+            // continua...
+        }
+
+        public static int SeekLineClient(Excel.Worksheet ws, string seekString, string SRange)
+        {
+            seekString = seekString.Trim();
+            if (!string.IsNullOrEmpty(seekString))
+            {
+
+            }
+            return 1;
+            // continua...
+        }
 
     }
 }
