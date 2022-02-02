@@ -215,9 +215,14 @@ namespace AlfredCmd
                     {   
                         if (ws.Name == she)
                         {
-                            // existe entao aplica o metodo protect
-                            // soma no array de saida, par retornar os atualizados
-                            Protect_Unprotec_sheet(ws, true);
+                            // Existe entao aplica o metodo protect
+                            //Soma no array de saida, par retornar os atualizados
+                            if (stype == 1)
+                            {
+                                Protect_Unprotec_sheet(ws, true);// protege a planila
+                            }
+                            else { Protect_Unprotec_sheet(ws, false); }// desprotege a planilha.
+
                             myArray[countsht] = she.ToString();
                             countsht++;
                             if (countsht > 20)
@@ -225,6 +230,7 @@ namespace AlfredCmd
                                 //retorna as planilhas que conseguiu atualizar
                                 return myArray;
                             }
+                                
                         }
                         else
                         {

@@ -72,40 +72,24 @@ namespace AlfredCmd
 
             Excel.Worksheet ws1 = (Excel.Worksheet)wb1.Worksheets.get_Item(1);
 
-            /* forma de passar parametros para celula evidenciada            
-                ws1.Cells[1, 1] = "33333"; 
-                Range range = ws1.get_Range("A1"); 
-                Console.WriteLine(range.Value);
-            */
+           //forma de passar parametros para celula evidenciada
+                ws1.Cells[1, 1] = "33333";
+            Range range = ws1.get_Range("A1");
+            Console.WriteLine(range.Value);
 
 
-            /*  forma para criar e preencher u array de strings e popula-lo com sas planilhas
-                string[] sSheet;
-                sSheet = new string[100];
-                sSheet[0] = "Menu";
-                sSheet[1] = "Auxiliar";
-                sSheet[2] = "Config";
 
-            */
+            //forma para criar e preencher u array de strings e popula - lo com sas planilhas
+            string[] sSheet;
+            sSheet = new string[100];
+            sSheet[0] = "Menu";
+            sSheet[1] = "Auxiliar";
+            sSheet[2] = "Config";
 
+            CnnExcel.SuProtecSelectSheets(0, wb1, sSheet);
 
-            // CnnExcel.SuProtecSelectSheets(0, wb1, sSheet);
+            CnnExcel.FcnCloseAppExcel();  //Fecha todos os Excel Aberto.
 
-            CnnExcel.FcnCloseAppExcel(wb1, 1);
-
-
-            System.Diagnostics.Process[] process = System.Diagnostics.Process.GetProcessesByName("Excel");
-            foreach (System.Diagnostics.Process p in process)
-            {
-                if (!string.IsNullOrEmpty(p.ProcessName))
-                {
-                    try
-                    {
-                        p.Kill();
-                    }
-                    catch { }
-                }
-            }
 
 
 
