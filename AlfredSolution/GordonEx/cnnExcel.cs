@@ -6,18 +6,21 @@ using Excel = Microsoft.Office.Interop.Excel;
 
 namespace AlfredCmd
 {
-    public static class cnnExcel
+    public static class CnnExcel
     {
 
         #region Members
         public static object XlApp;
         public static object Wb;
         public static object ws;
-        
+
+
+
+
         #endregion Members
 
         #region OpenWorkbook
-        public static object fcnOpenAppExcel(string spathFile, int sVisible)
+        public static object FcnOpenAppExcel(string spathFile, int sVisible)
         {
             try
             {
@@ -40,15 +43,16 @@ namespace AlfredCmd
             }
             catch (Exception)
             {
-                return 0;
                 Console.WriteLine("Não foi possível fechar o Arquivo do Exel...");
+                return 0;
+                
             }
-            
+
         }
         #endregion OpenWorkbook
 
         #region CloseWorkbook
-        public static object fcnCloseAppExcel(Excel.Workbook wb, int sSaved)
+        public static object FcnCloseAppExcel(Excel.Workbook wb, int sSaved)
         {
             try
             {
@@ -65,8 +69,9 @@ namespace AlfredCmd
             }
             catch (Exception ex)
             {
-                return 0;
                 Console.WriteLine($"Não foi possível fechar o Arquivo do Exel...{ex}");
+                return 0;
+               
             }
 
 
@@ -75,17 +80,17 @@ namespace AlfredCmd
 
         #endregion CloseWorkbook
 
-        #region fcnLastLine
-        public static int fcnLastLine(Excel.Worksheet ws)
+        #region FcnLastLine
+        public static int FcnLastLine(Excel.Worksheet ws)
         {
             Excel.Range xlRange = ws.UsedRange;
             int rowCount = xlRange.Rows.Count;
             return rowCount;
         }
-        #endregion fcnLastLine
+        #endregion FcnLastLine
 
-        #region fcnLastColumn
-        public static int fcnLastColumn(Excel.Worksheet ws)
+        #region FcnLastColumn
+        public static int FcnLastColumn(Excel.Worksheet ws)
         {
             try
             {
@@ -100,12 +105,12 @@ namespace AlfredCmd
                 Console.WriteLine($"Erro: {ex}");
                 return 0;
             }
-            
-        }
-        #endregion fcnLastColumn
 
-        #region fcnGoLastLine
-        public static int fcnGoLastLine(Excel.Worksheet ws, int intCol)
+        }
+        #endregion FcnLastColumn
+
+        #region FcnGoLastLine
+        public static int FcnGoLastLine(Excel.Worksheet ws, int intCol)
         {
             try
             {
@@ -118,12 +123,12 @@ namespace AlfredCmd
                 Console.WriteLine($"Erro: {ex}");
                 return 0;
             }
-            
-        }
-        #endregion fcnGoLastLine
 
-        #region fcnGoLastColumn
-        public static int fcnGoLastColumn(Excel.Worksheet ws, int intRow)
+        }
+        #endregion FcnGoLastLine
+
+        #region FcnGoLastColumn
+        public static int FcnGoLastColumn(Excel.Worksheet ws, int intRow)
         {
             try
             {
@@ -137,12 +142,12 @@ namespace AlfredCmd
                 Console.WriteLine($"Erro: {ex}");
                 return 0;
             }
-            
+
         }
-        #endregion fcnGoLastColumn
+        #endregion FcnGoLastColumn
 
         #region fcnControlCellColor
-        public static int fcnControlCellColor(Excel.Worksheet ws, int intRow, int intLastColumn, int intflag, int intColorIndex)
+        public static int FcnControlCellColor(Excel.Worksheet ws, int intRow, int intLastColumn, int intflag, int intColorIndex)
         {
             // metodo tem por objetivo colorir a dimenção da linha e coluna celecionada com a cor desejada evidenciando a linha em questão.
 
@@ -159,19 +164,19 @@ namespace AlfredCmd
                 Console.WriteLine($"Erro: {ex}");
                 return 0;
             }
-            
-           
+
+
         }
         #endregion fcnControlCellColor
 
 
-        public static int SeekLineClient(Excel.Worksheet ws, string seekString, string sRange )
+        public static int SeekLineClient(Excel.Worksheet ws, string seekString, string sRange)
         {
 
             seekString = seekString.Trim();
             if (!string.IsNullOrEmpty(seekString))
             {
-               
+
 
             }
 
@@ -182,25 +187,101 @@ namespace AlfredCmd
 
 
 
-        public static string formatData(string sdata, int stype) 
+        //public static string FormatData(string sdata, int stype)
+        //{
+        //    //string sday;
+        //    //string smonth;
+        //    //string sYear;
+        //    //string sDateOut;
+        //    //string sHour;
+        //    //string spHour;
+        //    //string sminute;
+        //    //string sSecond;
+        //    //string sTimeOut;
+
+
+        //    return "data";
+        //    // continua...
+        //}
+
+
+        public static string[] SuProtecSelectSheets(int stype, Excel.Application xlApp1, Excel.Workbook wb1, string[] she1)
         {
-            string sday;
-            string smonth;
-            string sYear;
-            string sDateOut;
-            string sHour;
-            string spHour;
-            string sminute;
-            string sSecond;
-            string sTimeOut;
+            xlApp1.ScreenUpdating = false;
+            xlApp1.DisplayAlerts = false;
 
 
-            return "data";
-            // continua...
+            string[] sSheet;
+            sSheet = she1;
+            int countsht = 0;
+            string[] myArray;
+
+            //Filtra no maximo 20 planilhas/ condição imposta pelo sistema.
+            myArray = new string[20];
+
+            foreach (string she in sSheet)
+            {
+                if (!string.IsNullOrEmpty(she))
+                {
+                    Console.WriteLine($"O nome das Planilhas é: {she}");
+                    //pesquisa se existem no workbook atual
+                    foreach (Excel.Worksheets ws in wb1.Worksheets)
+                    {
+                        if(ws.ToString() == she)
+                        {
+                            // existe entao aplica o metodo protect
+                            // soma no array de saida, par retornar os atualizados
+                            myArray[countsht] = she.ToString();
+                            countsht++;
+                            if (countsht > 20)
+                            {
+                                //retorna as planilhas que conseguiu atualizar
+                                return myArray;
+                            }
+                        }
+                    }                    
+                }
+                else
+                {
+                    break;
+                }
+            }
+
+            return myArray;
+
         }
 
+
+
+
+      
+          
+
+
+        public  static void Protect_Unprotec_sheet(Excel.Worksheet ws,  bool stype)
+        {
+            if (!stype)
+            {
+                if (ws.ProtectContents)
+                {
+                    ws.Unprotect(Password: "!@#");
+                }
+            }
+            else
+            {
+                if (!ws.ProtectContents)
+                {
+                    ws.Protect(Password: "!@#", DrawingObjects:true,Contents:true, Scenarios:true , AllowSorting:true, AllowFiltering:true, AllowUsingPivotTables:true);
+                }
+
+            }
+        }
+
+
+        
+
+
+
     }
-
-    
-
 }
+ 
