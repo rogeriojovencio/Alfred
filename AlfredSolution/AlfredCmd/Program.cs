@@ -29,6 +29,8 @@ namespace AlfredCmd
             //sSheet[1] = "Carlos";
             //sSheet[2] = "Macoratti";
 
+
+            //testando o array
             //foreach(string she in sSheet)
             //{
             //    if (!string.IsNullOrEmpty(she)) { 
@@ -46,17 +48,17 @@ namespace AlfredCmd
 
 
 
-
+            //sesta o workbook
             Console.WriteLine("Olá Mundo!");
             string strsourceFile = "C:\\dados\\Book1.xlsx";
            // string strsourceFile2 = "C:\\dados\\Entradas.xlsx";
 
-            
+            //Abre o Workbook 
             Excel.Workbook wb1 = (Excel.Workbook)CnnExcel.FcnOpenAppExcel(strsourceFile, 1);
             //Excel.Workbook wb2 = (Excel.Workbook)CnnExcel.FcnOpenAppExcel(strsourceFile2, 1);
 
 
-            //forme de percorrer uma planilha no Excel
+            //forma de percorrer uma planilha no Excel
             foreach(Excel.Worksheet ws in wb1.Worksheets)
             {
                 if (ws.Name == "José")
@@ -65,30 +67,33 @@ namespace AlfredCmd
                 }
             }
 
-
-            //xlWorkSheet = (Excel.Worksheet)xlWorkBook.Worksheets.get_Item(1);
-            //xlWorkSheet.Cells[1, 1] = "http://www.macoratti.net";
-
-
+            //coloca o item dentro da Celula
+            //xlWorkSheet = (Excel.Worksheet)xlWorkBook.Worksheets.get_Item(1);            
             Excel.Worksheet ws1 = (Excel.Worksheet)wb1.Worksheets.get_Item(1);
 
+
            //forma de passar parametros para celula evidenciada
-                ws1.Cells[1, 1] = "33333";
+            ws1.Cells[1, 1] = "33333";
             Range range = ws1.get_Range("A1");
             Console.WriteLine(range.Value);
 
 
-
-            //forma para criar e preencher u array de strings e popula - lo com sas planilhas
+            //........................................................................................
+            //forma para criar e preencher um array de strings e popula - lo com sas planilhas
             string[] sSheet;
             sSheet = new string[100];
             sSheet[0] = "Menu";
             sSheet[1] = "Auxiliar";
             sSheet[2] = "Config";
 
-            CnnExcel.SuProtecSelectSheets(0, wb1, sSheet);
+            //........................................................................................
+            //protegendo e desprotegendo planilhas
+            CnnExcel.SuProtecSelectSheets(1, wb1, sSheet); // protege  as planilhas selecionadas.
+            CnnExcel.SuProtecSelectSheets(0, wb1, sSheet); // desprotege as planilhas selecionadas.
 
-            CnnExcel.FcnCloseAppExcel();  //Fecha todos os Excel Aberto.
+            //........................................................................................
+            //fechando todos os excels abertos, inclusive retirando do task manager.
+            CnnExcel.FcnCloseAppExcel();  //Fecha todos os Excels Aberto.
 
 
 
