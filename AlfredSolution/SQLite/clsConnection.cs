@@ -10,7 +10,7 @@ using System.Data.SqlClient;
 
 namespace SQLite
 {
-    class ClsConnection
+ public   class ClsConnection
     {
 
         public SQLiteConnection cnn = null;
