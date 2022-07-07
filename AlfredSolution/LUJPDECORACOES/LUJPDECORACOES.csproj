@@ -60,9 +60,9 @@
       <Project>{f04d5233-15e9-49a5-b9ce-00946a8a39f0}</Project>
       <Name>AlfredCmd</Name>
     </ProjectReference>
-    <ProjectReference Include="..\DAL\DAL.csproj">
+    <ProjectReference Include="..\DAL\DAO.csproj">
       <Project>{8abaad21-e5a5-44ac-bccc-f97c833ccd0b}</Project>
-      <Name>DAL</Name>
+      <Name>DAO</Name>
     </ProjectReference>
     <ProjectReference Include="..\GordonEx\GordonEx.csproj">
       <Project>{2a0ec7ed-ef45-402f-9352-bb7e9faab44a}</Project>

@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Excel = Microsoft.Office.Interop.Excel;
-using DAL;
+using DAO;
 using System.Data;
 
 namespace LUJPDECORACOES
