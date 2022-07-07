@@ -83,7 +83,7 @@ namespace AlfredCmd
         #region CloseExcelAplication
         public static void FcnCloseAppExcel()
         {
-            //Este metodo tem por objetivo fechar todos os excel Aberto,  Retoirando do Gerenciado de memoria.
+            //Este metodo tem por objetivo fechar todos os excel Aberto,  Retirando do Gerenciado de memoria.
             System.Diagnostics.Process[] process = System.Diagnostics.Process.GetProcessesByName("Excel");
             foreach (System.Diagnostics.Process p in process)
             {
@@ -272,8 +272,7 @@ namespace AlfredCmd
         }
         #endregion Protect_Unprotec_sheet
 
-
-
+        #region FormatData
         public static string FormatData(string sdata, int stype)
         {
             string sday;
@@ -311,18 +310,10 @@ namespace AlfredCmd
                 //Se a data for invalida
 
             }
-
-
-
-
-
-
-
-
-
             return "data";
             // continua...
         }
+        #endregion FormatData
 
         public static int SeekLineClient(Excel.Worksheet ws, string seekString, string SRange)
         {

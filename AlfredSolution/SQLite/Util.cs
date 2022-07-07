@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AlfredCmd;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -47,7 +48,7 @@ namespace SQLite
 
 
 
-            ssql = "CREATE TABLE IF NOT EXISTS [TBL_GESTAO_SLA_ONDA] (" +
+            ssql = "CREATE TABLE IF NOT EXISTS [TBL_GESTAO_SLA_ONDA_] (" +
             "[numero_onda] NUMERIC(18, 0)  UNIQUE NOT NULL," +
             "[descricao_onda] VARCHAR(20)  NULL," +
             "[data_atu] DATE DEFAULT 'GetDate()' NULL" +
