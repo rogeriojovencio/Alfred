@@ -51,9 +51,7 @@ namespace LUJPDECORACOES
                 {
                     case "JANEIRO":
                         Console.WriteLine($"Este é o valor da Celula 1 {ws.Name}");
-
                         fcnDescribeDay(ws, wb);
-
                         break;
                 }
             }
@@ -74,6 +72,7 @@ namespace LUJPDECORACOES
                 Console.WriteLine($"Celula Ativa {Cel}");
             }
 
+            // saida criar um arquivo csv de linhas e colunas e inserir no banco de dados transacional.
         }
 
 
@@ -82,11 +81,9 @@ namespace LUJPDECORACOES
             string wbname = wb.Name;
             if((int)AlfredCmd.CnnExcel.FcnCloseWbExcel(wb, 0)==1)
             {
-
                 Console.WriteLine($"WorkBook encerrado com sucesso! {wbname}");
             }
             AlfredCmd.CnnExcel.FcnCloseAppExcel();
-
         }
 
 
