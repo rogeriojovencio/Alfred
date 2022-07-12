@@ -11,34 +11,22 @@ namespace DAO
 {
     public class DataAccess
     {
-        #region Objetos Estáticos
-        // Objeto Connection para obter acesso ao SQL Server
-        public static SqlConnection sqlconnection = new SqlConnection();
-        // Objeto SqlCommand para executar os com
-        public static SqlCommand comando = new SqlCommand();
-        // Objeto SqlParameter para adicionar os parâmetros
-        //necessários em nossas consultas
-         public static SqlParameter parametro = new SqlParameter();
+        #region Objetos Estáticos        
+        public static SqlConnection sqlconnection = new SqlConnection();        
+        public static SqlCommand comando = new SqlCommand();        
         #endregion
 
         #region Obter SqlConnection
         public static SqlConnection connection()
         {
             try
-            {
-                
-                // Obtemos os dados da conexão existentes no WebConfig
-                // utilizando o ConfigurationManager
-                string dadosConexao = ConfigurationManager.ConnectionStrings["lujpconnection"].ConnectionString;
-                //// Instanciando o objeto SqlConnection
-                sqlconnection = new SqlConnection(dadosConexao);
-                //Verifica se a conexão esta fechada.
+            {   
+                string dadosConexao = ConfigurationManager.ConnectionStrings["lujpconnection"].ConnectionString;             
+                sqlconnection = new SqlConnection(dadosConexao);             
                 if (sqlconnection.State == ConnectionState.Closed)
-                {
-                    //Abre a conexão.
+                {                    
                     sqlconnection.Open();
-                }
-                //Retorna o sqlconnection.
+                }                
                 return sqlconnection;
             }
             catch (SqlException ex)
@@ -62,78 +50,22 @@ namespace DAO
         }
         #endregion
 
-        #region Adiciona Parâmetros
-        public void AdicionarParametro(string nome,
-        SqlDbType tipo, int tamanho, object valor)
-        {
-            // Cria a instância do Parâmetro e adiciona os valores
-            parametro = new SqlParameter();
-            parametro.ParameterName = nome;
-            parametro.SqlDbType = tipo;
-            parametro.Size = tamanho;
-            parametro.Value = valor;
-            // Adiciona ao comando SQL o parâmetro
-            comando.Parameters.Add(parametro);
-        }
-        #endregion
-
-        #region Adiciona Parâmetros
-        public void AdicionarParametro(string nome, SqlDbType tipo, object valor)
-        {
-           
-                // Cria a instância do Parâmetro e adiciona os valores
-                SqlParameter parametro = new SqlParameter();
-                parametro.ParameterName = nome;
-                parametro.SqlDbType = tipo;
-                parametro.Value = valor;
-                // Adiciona ao comando SQL o parâmetro
-                comando.Parameters.Add(parametro);
-           
-        }
-        #endregion
-
-        #region Remove os parâmetros
-        public void RemoverParametro(string pNome)
-        {
-            // Verifica se existe o parâmetro
-            if (comando.Parameters.Contains(pNome))
-                // Se exite remove o mesmo
-                comando.Parameters.Remove(pNome);
-        }
-        #endregion
-
-        #region Limpar Parâmetros
-        public void LimparParametros()
-        {
-            comando.Parameters.Clear();
-        }
-        #endregion
-
         #region Executar Consulta SQL
         public DataTable ExecutaConsulta(string sql)
         {
             try
-            {
-                // Pega conexão com a base SQL Server
-                comando.Connection = connection();
-                // Adiciona a instrução SQL
+            {                
+                comando.Connection = connection();                
                 comando.CommandText = sql;
-                //Executa a query sql.
-                comando.ExecuteScalar();
-                // Ler os dados e passa para um DataTable
+                comando.ExecuteScalar();                
                 IDataReader dtreader = comando.ExecuteReader();
                 DataTable dtresult = new DataTable();
-                dtresult.Load(dtreader);
-                // Fecha a conexão
-                sqlconnection.Close();
-                // Retorna o DataTable com os dados da consulta
+                dtresult.Load(dtreader);                
+                sqlconnection.Close();             
                 return dtresult;
             }
             catch (Exception ex)
-            {
-                // Retorna uma exceção simples que pode ser tratada por parte do desenvolvedor
-                // Exemplo: if (ex.Message.toString().Contains(‘Networkig’))
-                // Exemplo throw new Exception(‘Problema de rede detectado’);
+            {            
                 throw ex;
             }
         }
@@ -143,25 +75,18 @@ namespace DAO
         public int ExecutaAtualizacao(string sql)
         {
             try
-            {
-                //Instância o sqlcommand com a query sql que será executada e a conexão.
-                //comando = new SqlCommand(sql, connection());
+            {                
                 comando.Connection = connection();
-                comando.CommandText = sql;
-                //Executa a query sql.
+                comando.CommandText = sql;                
                 int result = comando.ExecuteNonQuery();
-                sqlconnection.Close();
-                // Retorna a quantidade de linhas afetadas
+                sqlconnection.Close();                
                 return result;
             }
             catch (Exception ex)
-            {
-                // Retorna uma exceção simples que pode ser tratada por parte do desenvolvedor
+            {                
                 throw ex;
             }
         }
         #endregion
     }
-
-
 }
