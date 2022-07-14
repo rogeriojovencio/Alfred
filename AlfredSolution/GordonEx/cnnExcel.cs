@@ -15,7 +15,7 @@ namespace AlfredCmd
         public static object ws;
         const string pwd = "!@#";
 
-        
+
         #endregion Members
 
         #region OpenWorkbook
@@ -25,9 +25,9 @@ namespace AlfredCmd
             {
                 string sfilePath = spathFile;
                 Excel.Application xlApp = new Excel.Application();
-                
 
-                Excel.Workbook wb = xlApp.Workbooks.Open(@sfilePath);                
+
+                Excel.Workbook wb = xlApp.Workbooks.Open(@sfilePath);
                 xlApp.WindowState = Excel.XlWindowState.xlMaximized;
 
                 if (sVisible == 1)
@@ -48,7 +48,7 @@ namespace AlfredCmd
             catch (Exception)
             {
                 Console.WriteLine("Não foi possível fechar o Arquivo do Exel...");
-                return 0;                
+                return 0;
             }
 
         }
@@ -60,7 +60,7 @@ namespace AlfredCmd
             try
             {
                 if (sSaved == 1)
-                {                    
+                {
                     wb.Close(1);
                     return 1;
                 }
@@ -74,7 +74,7 @@ namespace AlfredCmd
             {
                 Console.WriteLine($"Não foi possível fechar o Arquivo do Exel...{ex}");
                 return 0;
-               
+
             }
         }
 
@@ -150,7 +150,7 @@ namespace AlfredCmd
         public static int FcnGoLastColumn(Excel.Worksheet ws, int intRow)
         {
             /* O metodo tem por objetivo ir para coluna linha da planilha*/
-            
+
             try
             {
                 Excel.Range xlRange = ws.UsedRange;
@@ -194,7 +194,7 @@ namespace AlfredCmd
         #region SuProtecSelectSheets
         public static string[] SuProtecSelectSheets(int stype, Excel.Workbook wb1, string[] she1)
         {
-            
+
 
 
             string[] sSheet;
@@ -212,7 +212,7 @@ namespace AlfredCmd
                     Console.WriteLine($"O nome das Planilhas é: {she}");
                     //pesquisa se existem no workbook atual
                     foreach (Excel.Worksheet ws in wb1.Worksheets)
-                    {   
+                    {
                         if (ws.Name == she)
                         {
                             // Existe entao aplica o metodo protect
@@ -230,7 +230,7 @@ namespace AlfredCmd
                                 //retorna as planilhas que conseguiu atualizar
                                 return myArray;
                             }
-                                
+
                         }
                         else
                         {
@@ -252,7 +252,7 @@ namespace AlfredCmd
         #endregion SuProtecSelectSheets
 
         #region Protect_Unprotec_sheet
-        public static void Protect_Unprotec_sheet(Excel.Worksheet ws,  bool stype)
+        public static void Protect_Unprotec_sheet(Excel.Worksheet ws, bool stype)
         {
             if (!stype)
             {
@@ -265,7 +265,7 @@ namespace AlfredCmd
             {
                 if (!ws.ProtectContents)
                 {
-                    ws.Protect(Password: pwd, DrawingObjects:true,Contents:true, Scenarios:true , AllowSorting:true, AllowFiltering:true, AllowUsingPivotTables:true);
+                    ws.Protect(Password: pwd, DrawingObjects: true, Contents: true, Scenarios: true, AllowSorting: true, AllowFiltering: true, AllowUsingPivotTables: true);
                 }
 
             }
@@ -287,31 +287,38 @@ namespace AlfredCmd
 
 
             DateTime dataValida;
+            string strdataValida ="";
 
             if (DateTime.TryParse(sdata, out dataValida))
 
             {
-
                 dataValida.ToString("MM/dd/yyyy");
                 sday = dataValida.ToString("dd");
                 smonth = dataValida.ToString("MM");
-                sYear = dataValida.ToString("yyyy");                
-                sHour = dataValida.ToString("MM");                 
-                sminute = dataValida.ToString("mm"); 
-                sSecond = dataValida.ToString("ss"); 
-                
+                sYear = dataValida.ToString("yyyy");
+                sHour = dataValida.ToString("MM");
+                sminute = dataValida.ToString("mm");
+                sSecond = dataValida.ToString("ss");
 
+                switch (stype)
+                {
+
+                    case 1:   
+                        strdataValida = sYear.ToString() + "-" + smonth + "-" + sday;
+                        break;
+                    case 2:
+                        strdataValida = sYear.ToString() + smonth + sday;
+                        break;
+                }
             }
-
             else
-
             {
-
                 //Se a data for invalida
-
+                strdataValida = "";
             }
-            return "data";
-            // continua...
+
+            return strdataValida;
+            
         }
         #endregion FormatData
 
@@ -328,4 +335,3 @@ namespace AlfredCmd
 
     }
 }
- 

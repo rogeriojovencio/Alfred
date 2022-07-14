@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LUJPDECORACOES", "LUJPDECOR
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DAO", "DAL\DAO.csproj", "{8ABAAD21-E5A5-44AC-BCCC-F97C833CCD0B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gordontxt", "Gordontxt\Gordontxt.csproj", "{236C08B2-EA7E-4D68-A83D-84C95260ED71}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +47,10 @@ Global
 		{8ABAAD21-E5A5-44AC-BCCC-F97C833CCD0B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8ABAAD21-E5A5-44AC-BCCC-F97C833CCD0B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8ABAAD21-E5A5-44AC-BCCC-F97C833CCD0B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{236C08B2-EA7E-4D68-A83D-84C95260ED71}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{236C08B2-EA7E-4D68-A83D-84C95260ED71}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{236C08B2-EA7E-4D68-A83D-84C95260ED71}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{236C08B2-EA7E-4D68-A83D-84C95260ED71}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
