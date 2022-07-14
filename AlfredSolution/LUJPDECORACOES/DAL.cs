@@ -17,22 +17,9 @@ namespace LUJPDECORACOES
         public string date { get; set; }
         public string Valor { get; set; }
         public string Date_atu { get; set; }    
-        public List<object> data { get; set; }
-        public int TotalLines { get; set; }
+     
 
-        public void CreateOrWriteFile( string PathFilename, List<object> data,  int TotalLines)
-        {
-            this.TotalLines = TotalLines;
-            this.data = data;
-            // cria o arquivo
-            StreamWriter sw = new StreamWriter(PathFilename);            
-            foreach (var item in data)
-            {
-
-            }
-
-        }
-
+       
 
 
         public int fcnInsertTableImport()
