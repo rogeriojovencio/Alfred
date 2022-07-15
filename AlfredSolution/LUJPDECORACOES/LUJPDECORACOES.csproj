@@ -69,6 +69,10 @@
       <Project>{2a0ec7ed-ef45-402f-9352-bb7e9faab44a}</Project>
       <Name>GordonEx</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Gordontxt\Gordontxt.csproj">
+      <Project>{236C08B2-EA7E-4D68-A83D-84C95260ED71}</Project>
+      <Name>Gordontxt</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -9,6 +9,7 @@ using Excel = Microsoft.Office.Interop.Excel;
 using DAO;
 using System.Data;
 using FData = AlfredCmd.CnnExcel;
+using Gordontxt;
 
 namespace LUJPDECORACOES
 {
@@ -51,7 +52,7 @@ namespace LUJPDECORACOES
                 switch (mes)
                 {
                     case "JANEIRO":
-                        Console.WriteLine($"Trabalhando Planilha mês de: {ws.Name}");                     
+                        Console.WriteLine($"Trabalhando Planilha mês de: {ws.Name}");
                         fcnDescribeDay(ws, wb);
                         break;
                 }
@@ -65,26 +66,33 @@ namespace LUJPDECORACOES
             int LastColumn = 33;
             int Col = 3;
             DAL dt = new DAL();
-            dt.NameFile = "0001FD" + DateTime.Now.ToString("yyyyMMddhhmmss").ToString(); // string do tipo do arquivo especifico + 
+           // dt.NameFile = "0001FD" + DateTime.Now.ToString("yyyyMMddhhmmss").ToString() + ".csv"; // string do tipo do arquivo especifico + 
             //tratamento para os dias do mes
             for (Col = 3; Col < LastColumn; Col++)
             {
-                string sDataDia = FData.FormatData(Convert.ToString(ws.Cells[Line, Col].Value),1);
+                string sDataDia = FData.FormatData(Convert.ToString(ws.Cells[Line, Col].Value), 1);
                 fcnEntradasOperacionais(ws, wb, Col, sDataDia);
             }
-            
+
         }
         public static void fcnEntradasOperacionais(Excel.Worksheet ws, Excel.Workbook wb, int Col, string sDataDia)
         {
-            DAL dt = new DAL();
-            dt.NameFile = "0001FD" + FData.FormatData(sDataDia,2) + DateTime.Now.ToString("yyyyMMddhhmmss").ToString(); // string do tipo do arquivo especifico + 
+            #region Variáveis de Entrada            
+            DAL dt = new DAL();            
             int Line = 1;
-            int LastLine = AlfredCmd.CnnExcel.FcnLastLine(ws);            
+            int LastLine = AlfredCmd.CnnExcel.FcnLastLine(ws);
             int ColConta = 2;
             int colValues = Col;
+            List<object> data = new List<object>();
+            WorkFiles wk = new WorkFiles();
+            #endregion Variáveis de Entrada
 
             #region Entradas Operacionais
             // c) Entradas Operacionais
+            dt.NameFile = "0001EO" + FData.FormatData(sDataDia, 2) + DateTime.Now.ToString("yyyyMMddhhmmss").ToString() + ".csv"; // string do tipo do arquivo especifico + 
+            dt.date = FData.FormatData(sDataDia, 1);
+            dt.Date_atu = FData.FormatData(DateTime.Now.ToString(), 1).ToString();
+
             for (Line = 9; Line <= 24; Line++)
             {
                 if (!string.IsNullOrEmpty(ws.Cells[Line, ColConta].Value))
@@ -101,24 +109,28 @@ namespace LUJPDECORACOES
                 if (!string.IsNullOrEmpty(Convert.ToString(ws.Cells[Line, colValues].Value)))
                 {
                     dt.Valor = Convert.ToString(ws.Cells[Line, colValues].Value).Replace(',', '.');
-                   // Console.WriteLine($" Este é o valor transformado em decimal: {dt.Valor}");
+                    // Console.WriteLine($" Este é o valor transformado em decimal: {dt.Valor}");
                 }
                 else
                 {
                     dt.Valor = "0";
                 }
-                Console.WriteLine($"{dt.NameFile};{dt.date};{dt.Name};{dt.Valor}");
+                //   Console.WriteLine($"{dt.NameFile};{dt.date};{dt.Name};{dt.Valor}");
                 /*
              - Formata data formato sql
              - captura no banco as entradas cadastradas
               */
+                data.Add($"{dt.NameFile.ToString()}; {dt.date.ToString()}; {dt.Name.ToString()}; {dt.Valor.ToString()};{dt.Date_atu.ToString()}");
             }
+
+            wk.CreateOrWriteFile("C:\\dados\\Samira_Luciano\\results\\" + dt.NameFile, data, 1000);            
+
             #endregion Entradas Operacionais
-            goto px;
-
-
-
+            
             #region Entradas Financeiras
+            dt.NameFile = "0001EF" + FData.FormatData(sDataDia, 2) + DateTime.Now.ToString("yyyyMMddhhmmss").ToString() + ".csv"; // string do tipo do arquivo especifico + 
+            dt.date = FData.FormatData(sDataDia, 1);
+            dt.Date_atu = FData.FormatData(DateTime.Now.ToString(),1).ToString();
             for (Line = 27; Line <= 31; Line++)
             {
                 if (!string.IsNullOrEmpty(ws.Cells[Line, ColConta].Value))
@@ -131,7 +143,7 @@ namespace LUJPDECORACOES
                     dt.Valor = "0";
                     continue;
                 }
-                dt.date = DateTime.Now.ToString("yyyy-MM-dd");
+               
                 if (!string.IsNullOrEmpty(Convert.ToString(ws.Cells[Line, colValues].Value)))
                 {
                     dt.Valor = Convert.ToString(ws.Cells[Line, colValues].Value).Replace(',', '.');
@@ -146,11 +158,16 @@ namespace LUJPDECORACOES
              - Formata data formato sql
              - captura no banco as entradas cadastradas
               */
+                data.Add($"{dt.NameFile.ToString()}; {dt.date.ToString()}; {dt.Name.ToString()}; {dt.Valor.ToString()};{dt.Date_atu.ToString()}");
             }
+            wk.CreateOrWriteFile(("C:\\dados\\Samira_Luciano\\results\\" + dt.NameFile), data, 1000);
 
             #endregion Entradas Financeiras
 
             #region Custos com Fornecedores
+            dt.NameFile = "0001CF" + FData.FormatData(sDataDia, 2) + DateTime.Now.ToString("yyyyMMddhhmmss").ToString() + ".csv"; // string do tipo do arquivo especifico + 
+            dt.date = FData.FormatData(sDataDia, 1);
+            dt.Date_atu = FData.FormatData(DateTime.Now.ToString(), 1).ToString();
             for (Line = 35; Line <= 46; Line++)
             {
                 if (!string.IsNullOrEmpty(ws.Cells[Line, ColConta].Value))
@@ -173,15 +190,20 @@ namespace LUJPDECORACOES
                 {
                     dt.Valor = "0";
                 }
-                Console.WriteLine($"Celula Ativa {dt.NameFile} - {dt.Name}  - {dt.date} - {dt.Valor} - ColConta:{ColConta}");
+                //  data.Add($"{dt.NameFile.ToString()}; {Date_atu};{dt.date.ToString()}; {dt.Name.ToString()}; {dt.Valor.ToString()}");
                 /*
              - Formata data formato sql
              - captura no banco as entradas cadastradas
               */
+                data.Add($"{dt.NameFile.ToString()}; {dt.date.ToString()}; {dt.Name.ToString()}; {dt.Valor.ToString()};{dt.Date_atu.ToString()}");
             }
+            wk.CreateOrWriteFile(("C:\\dados\\Samira_Luciano\\results\\" + dt.NameFile), data, 1000);
             #endregion Custos com Fornecedores
 
             #region Desembolso das Despesas Variávéis
+            dt.NameFile = "0001DV" + FData.FormatData(sDataDia, 2) + DateTime.Now.ToString("yyyyMMddhhmmss").ToString() + ".csv"; // string do tipo do arquivo especifico + 
+            dt.date = FData.FormatData(sDataDia, 1);
+            dt.Date_atu = FData.FormatData(DateTime.Now.ToString(), 1).ToString();
 
             for (Line = 49; Line <= 64; Line++)
             {
@@ -210,10 +232,15 @@ namespace LUJPDECORACOES
              - Formata data formato sql
              - captura no banco as entradas cadastradas
               */
+                data.Add($"{dt.NameFile.ToString()}; {dt.date.ToString()}; {dt.Name.ToString()}; {dt.Valor.ToString()};{dt.Date_atu.ToString()}");
             }
+            wk.CreateOrWriteFile(("C:\\dados\\Samira_Luciano\\results\\" + dt.NameFile), data, 1000);
             #endregion Desembolso das Despesas Variavéis
 
             #region Desembolso das Despesas Fixas
+            dt.NameFile = "0001DF" + FData.FormatData(sDataDia, 2) + DateTime.Now.ToString("yyyyMMddhhmmss").ToString() + ".csv"; // string do tipo do arquivo especifico + 
+            dt.date = FData.FormatData(sDataDia, 1);
+            dt.Date_atu = FData.FormatData(DateTime.Now.ToString(), 1).ToString();
 
             for (Line = 67; Line <= 94; Line++)
             {
@@ -242,11 +269,16 @@ namespace LUJPDECORACOES
                 - Formata data formato sql
                 - captura no banco as entradas cadastradas
                 */
+                data.Add($"{dt.NameFile.ToString()}; {dt.date.ToString()}; {dt.Name.ToString()}; {dt.Valor.ToString()};{dt.Date_atu.ToString()}");
             }
-        #endregion desembolso das Despesas Fixas
+            wk.CreateOrWriteFile(("C:\\dados\\Samira_Luciano\\results\\" + dt.NameFile), data, 1000);
+            #endregion desembolso das Despesas Fixas
 
-        px:;
         }
+
+
+
+
         public static void fcnCloseExcel(Excel.Workbook wb)
         {
             string wbname = wb.Name;

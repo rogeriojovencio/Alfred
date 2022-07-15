@@ -11,29 +11,25 @@ namespace Gordontxt
    public  class WorkFiles
     {
         public string  FilePathorigin { get; set; }
-        public string Filepathdestiny { get; set; }
-
-        public List<object> data { get; set; }
-        public int TotalLines { get; set; }
+        public string Filepathdestiny { get; set; }        
 
         public void CreateOrWriteFile(string PathFilename, List<object> data, int TotalLines)
         {
-            this.TotalLines = TotalLines;
-            this.data = data;
-            // cria o arquivo
+
+            // cria o arquivo            
             StreamWriter sw = new StreamWriter(PathFilename);
+
             foreach (var item in data)
             {
 
-
-
-
+                sw.WriteLine(item);
+                Console.WriteLine($"{item.ToString()}");
             }
+
+            sw.Close();
 
         }
 
-
-
-
+        
     }
 }
