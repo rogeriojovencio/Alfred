@@ -72,6 +72,7 @@ namespace LUJPDECORACOES
             {
                 string sDataDia = FData.FormatData(Convert.ToString(ws.Cells[Line, Col].Value), 1);
                 fcnEntradasOperacionais(ws, wb, Col, sDataDia);
+                
             }
 
         }
@@ -147,13 +148,13 @@ namespace LUJPDECORACOES
                 if (!string.IsNullOrEmpty(Convert.ToString(ws.Cells[Line, colValues].Value)))
                 {
                     dt.Valor = Convert.ToString(ws.Cells[Line, colValues].Value).Replace(',', '.');
-                    Console.WriteLine($" Este é o valor transformado em decimal: {dt.Valor}");
+                   // Console.WriteLine($" Este é o valor transformado em decimal: {dt.Valor}");
                 }
                 else
                 {
                     dt.Valor = "0";
                 }
-                Console.WriteLine($"Celula Ativa {dt.NameFile} - {dt.Name}  - {dt.date} - {dt.Valor} - ColConta:{ColConta}");
+                //Console.WriteLine($"Celula Ativa {dt.NameFile} - {dt.Name}  - {dt.date} - {dt.Valor} - ColConta:{ColConta}");
                 /*
              - Formata data formato sql
              - captura no banco as entradas cadastradas

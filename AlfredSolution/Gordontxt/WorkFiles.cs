@@ -15,15 +15,15 @@ namespace Gordontxt
 
         public void CreateOrWriteFile(string PathFilename, List<object> data, int TotalLines)
         {
-
+            PathFilename = PathFilename;
             // cria o arquivo            
             StreamWriter sw = new StreamWriter(PathFilename);
 
             foreach (var item in data)
             {
 
-                sw.WriteLine(item);
-                Console.WriteLine($"{item.ToString()}");
+                sw.WriteLine($"{item}\n" );
+                Console.WriteLine($"{item.ToString()}\n");
             }
 
             sw.Close();

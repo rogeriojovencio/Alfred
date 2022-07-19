@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DAO", "DAL\DAO.csproj", "{8
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gordontxt", "Gordontxt\Gordontxt.csproj", "{236C08B2-EA7E-4D68-A83D-84C95260ED71}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GordonSelenium", "GordonSelenium\GordonSelenium.csproj", "{66B4BBB1-38BD-4092-8F66-756BC4467FFC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,10 @@ Global
 		{236C08B2-EA7E-4D68-A83D-84C95260ED71}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{236C08B2-EA7E-4D68-A83D-84C95260ED71}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{236C08B2-EA7E-4D68-A83D-84C95260ED71}.Release|Any CPU.Build.0 = Release|Any CPU
+		{66B4BBB1-38BD-4092-8F66-756BC4467FFC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{66B4BBB1-38BD-4092-8F66-756BC4467FFC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{66B4BBB1-38BD-4092-8F66-756BC4467FFC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{66B4BBB1-38BD-4092-8F66-756BC4467FFC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
